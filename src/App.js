@@ -2,8 +2,10 @@ import React from 'react';
 import { GithubContext } from './context/context';
 
 const App = () => {
-  const data = React.useContext(GithubContext);
-  return <div>{data}</div>;
+  const { user, requests } = React.useContext(GithubContext);
+  console.log(user);
+  console.log(requests);
+  return <div></div>;
 };
 
 export default App;
