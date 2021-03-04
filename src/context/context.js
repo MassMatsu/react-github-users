@@ -21,9 +21,12 @@ const GithubProvider = ({ children }) => {
     console.log(response.data);
     if (response.data) {
       setUser(response.data);
-      const { followers_url, login } = response.data;
+      const { followers_url, repos_url } = response.data;
       axios(`${followers_url}?per_page=100`)
         .then((response) => setFollowers(response.data))
+        .catch((error) => console.log(error));
+      axios(`${repos_url}?per_page=100`)
+        .then((response) => setRepos(response.data))
         .catch((error) => console.log(error));
     } else {
       console.log('error');
