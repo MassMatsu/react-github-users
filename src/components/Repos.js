@@ -56,9 +56,6 @@ const Repos = () => {
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
-  console.log(projectStars);
-  console.log(projectForks);
-
   return (
     <section className='section'>
       <Wrapper className='section-center'>
