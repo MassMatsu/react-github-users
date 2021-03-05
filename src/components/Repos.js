@@ -1,7 +1,7 @@
 import React from 'react';
 import { GithubContext } from '../context/context';
 import styled from 'styled-components';
-import { Pie3D, Doughnut2D } from './Charts/index';
+import { Pie3D, Doughnut2D, Column3D, Bar3D } from './Charts/index';
 
 const Repos = () => {
   const { repos } = React.useContext(GithubContext);
@@ -38,14 +38,33 @@ const Repos = () => {
     })
     .slice(0, 5);
 
-  console.log(popularLanguages);
+  const projects = repos.reduce(
+    (total, repo, index) => {
+      const { name, stargazers_count, forks } = repo;
+      total.stars[index] = { label: name, value: stargazers_count };
+      total.forks[index] = { label: name, value: forks };
+      return total;
+    },
+    { stars: {}, forks: {} }
+  );
+
+  const { stars, forks } = projects;
+  const projectStars = Object.values(stars)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+  const projectForks = Object.values(forks)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  console.log(projectStars);
 
   return (
     <section className='section'>
       <Wrapper className='section-center'>
         <Pie3D data={usedLanguages} />
-        <div></div>
+        <Column3D data={projectStars} />
         <Doughnut2D data={popularLanguages} />
+        <Bar3D data={projectForks} />
       </Wrapper>
     </section>
   );
