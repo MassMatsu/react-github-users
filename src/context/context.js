@@ -15,11 +15,13 @@ const GithubProvider = ({ children }) => {
   const [requests, setRequests] = useState(0);
 
   const fetchUser = async (searchText) => {
+    setLoading(true);
+    toggleError();
     const response = await axios(
       `${rootUrl}/users/${searchText}`
     ).catch((error) => console.log(error));
 
-    if (response.data) {
+    if (response) {
       setUser(response.data);
       const { followers_url, repos_url } = response.data;
       axios(`${followers_url}?per_page=100`)
@@ -30,7 +32,9 @@ const GithubProvider = ({ children }) => {
         .catch((error) => console.log(error));
     } else {
       console.log('error');
+      toggleError(true, 'there is no matching user for your search');
     }
+    setLoading(false);
     fetchRequests();
   };
 
@@ -38,6 +42,10 @@ const GithubProvider = ({ children }) => {
     const response = await axios(rateLimitUrl);
     setRequests(response.data.rate.remaining);
   };
+
+  function toggleError(show = false, msg = '') {
+    setError({ show, msg });
+  }
 
   useEffect(() => {
     fetchUser(user);
@@ -53,8 +61,6 @@ const GithubProvider = ({ children }) => {
         followers,
         repos,
         requests,
-        setUser,
-        fetchRequests,
         fetchUser,
       }}
     >

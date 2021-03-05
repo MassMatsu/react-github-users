@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Pie3D, Doughnut2D, Column3D, Bar3D } from './Charts/index';
 
 const Repos = () => {
-  const { repos } = React.useContext(GithubContext);
+  const { loading, repos } = React.useContext(GithubContext);
 
   const languages = repos.reduce((total, repo) => {
     // languages -> {JavaScript:{...}, CSS:{...}, HTML:{...}}
