@@ -19,7 +19,7 @@ ReactFC.fcRoot(FusionCharts, Chart, FusionTheme);
 
 const App = ({ data }) => {
   const chartConfigs = {
-    type: 'doughnut2d', // The chart type
+    type: 'column3d', // The chart type
     width: '100%', // Width of the chart
     height: '400', // Height of the chart
     dataFormat: 'json', // Data type
@@ -27,13 +27,15 @@ const App = ({ data }) => {
       // Chart Configuration
       chart: {
         //Set the chart caption
-        caption: 'Stars per Languages',
-        pieRadius: '45%',
-        decimals: 0,
-        showPercentValues: 0,
-        theme: 'candy',
-        baseFontSize: '16',
-        //outCnvBaseFontColor: '#102A42',
+        caption: 'Most Popular',
+        //Set the x-axis name
+        xAxisName: 'Repos',
+        //Set the y-axis name
+        yAxisName: 'Stars',
+        //Set the theme for your chart
+
+        xAxisNameFontSize: '16px',
+        yAxisNameFontSize: '16px',
       },
       // Chart Data
       data: data,
