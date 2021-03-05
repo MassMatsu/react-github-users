@@ -24,23 +24,44 @@ const GithubProvider = ({ children }) => {
     if (response) {
       setUser(response.data);
       const { followers_url, repos_url } = response.data;
-      axios(`${followers_url}?per_page=100`)
-        .then((response) => setFollowers(response.data))
-        .catch((error) => console.log(error));
-      axios(`${repos_url}?per_page=100`)
-        .then((response) => setRepos(response.data))
+
+      // axios(`${followers_url}?per_page=100`)
+      //   .then((response) => setFollowers(response.data))
+      //   .catch((error) => console.log(error));
+      // axios(`${repos_url}?per_page=100`)
+      //   .then((response) => setRepos(response.data))
+      //   .catch((error) => console.log(error));
+
+      await Promise.allSettled([
+        axios(`${followers_url}?per_page=100`),
+        axios(`${repos_url}?per_page=100`),
+      ])
+        .then((response) => {
+          const [followers, repos] = response;
+          const status = 'fulfilled';
+          if (followers.status === status) {
+            setFollowers(followers.value.data);
+          }
+          if (repos.status === status) {
+            setRepos(repos.value.data);
+          }
+        })
         .catch((error) => console.log(error));
     } else {
       console.log('error');
       toggleError(true, 'there is no matching user for your search');
     }
+
     setLoading(false);
-    fetchRequests();
+    checkRequests();
   };
 
-  const fetchRequests = async () => {
+  const checkRequests = async () => {
     const response = await axios(rateLimitUrl);
     setRequests(response.data.rate.remaining);
+    if (response.data.rate.remaining === 0) {
+      toggleError(true, 'sorry, you have exceeded hourly rate limit');
+    }
   };
 
   function toggleError(show = false, msg = '') {
