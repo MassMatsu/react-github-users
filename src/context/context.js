@@ -14,11 +14,11 @@ const GithubProvider = ({ children }) => {
   const [repos, setRepos] = useState([]);
   const [requests, setRequests] = useState(0);
 
-  const fetchUser = async () => {
-    const response = await axios(`${rootUrl}/users/${user}`).catch((error) =>
-      console.log(error)
-    );
-    console.log(response.data);
+  const fetchUser = async (searchText) => {
+    const response = await axios(
+      `${rootUrl}/users/${searchText}`
+    ).catch((error) => console.log(error));
+
     if (response.data) {
       setUser(response.data);
       const { followers_url, repos_url } = response.data;
@@ -31,15 +31,17 @@ const GithubProvider = ({ children }) => {
     } else {
       console.log('error');
     }
+    fetchRequests();
   };
 
-  const fetchRate = async () => {
+  const fetchRequests = async () => {
     const response = await axios(rateLimitUrl);
     setRequests(response.data.rate.remaining);
   };
+
   useEffect(() => {
-    fetchRate();
-    fetchUser();
+    fetchUser(user);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -51,6 +53,9 @@ const GithubProvider = ({ children }) => {
         followers,
         repos,
         requests,
+        setUser,
+        fetchRequests,
+        fetchUser,
       }}
     >
       {children}
