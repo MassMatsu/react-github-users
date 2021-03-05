@@ -57,6 +57,7 @@ const Repos = () => {
     .slice(0, 5);
 
   console.log(projectStars);
+  console.log(projectForks);
 
   return (
     <section className='section'>
