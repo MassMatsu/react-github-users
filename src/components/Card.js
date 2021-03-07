@@ -5,7 +5,7 @@ import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
 
 const Card = () => {
   const { user } = React.useContext(GithubContext);
-  console.log(user);
+
   const {
     avatar_url,
     name,
