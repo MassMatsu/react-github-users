@@ -1,9 +1,9 @@
-## Starter Project
+## About Project
 
-- css provided (global styles, styled components)
-- folders/files already setup
-- all imports included (warnings)
-- index.js for easier imports
+- This is one of the app from React Tutorial and Projects Course by John Smilga.
+- The amazing course offers ton of cool on hands experiences.
+- I gave a try to imitate this app from scratch, so I could learn the stracture of the app including all the files location, coding technique, and API and Auth0 usage.
+- I also had a try to follow git-flow development process. It was first time for me to use pull request even. It was hard at the beginning, but I got comfortable towards to the end.
 
 ## Styled Components
 
